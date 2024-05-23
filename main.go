@@ -295,8 +295,9 @@ func convertWhiteTransparent(src *image.NRGBA) {
 func calcEntireMoireBackImage(animFrames []*image.NRGBA, maskFrames []*image.NRGBA, outputPath string) (*image.NRGBA, error) {
 	moireBackImage := image.NewNRGBA(animFrames[0].Bounds())
 	fillWhiteFalse(moireBackImage)
+	maskFramesLen := len(maskFrames)
 	for i, animFrame := range animFrames {
-		maskFrame := maskFrames[i]
+		maskFrame := maskFrames[i%maskFramesLen]
 		moireFrame := calcMoireFrame(animFrame, maskFrame)
 		moireBackImage = calcNewFinalFrame(moireBackImage, moireFrame)
 	}
